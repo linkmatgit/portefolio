@@ -1,0 +1,144 @@
+// Variables
+// ==================
+:root {
+  --color-dark: #000;
+  --color: #121c42;
+  --color-light: #121c4299;
+  --color-inversed: #effbec;
+  --color-transparent: #{rgba(#121c42, 0)};
+  --contrast: #4869ee;
+  --contrast25: #4869ee3f;
+  --gap: 20px;
+  --space: 8px;
+  --border: #d5e3ec;
+  --border-light: #e6eff4;
+  --background: #f7fafb;
+  --background-light: #fff;
+  --shadow: #d8e1e8;
+  --list-hover: var(--background);
+  --play: #f3f9fb; // Couleur de fond du bouton play
+  --space-section: 150px;
+  --card-footer: #f7fafd;
+  --card-padding: 16px;
+  --header-height: 137px;
+  --red: #f25353;
+  --green: #41cf7c;
+  --yellow: #feb32b;
+  --yellow-alpha: #feb32b4C;
+  --skeleton: var(--border-light);
+  --skeleton-wave: var(--border-light);
+}
+
+.dark {
+  --color-dark: #fff;
+  --color: #effbec;
+  --color-light: #effbec99;
+  --color-inversed: #121c42;
+  --contrast: #61a0f6;
+  --gap: 20px;
+  --space: 8px;
+  --border: #122c45;
+  --border-light: #161e3b;
+  --background: #202248;
+  --background-light: #171933;
+  --shadow: #0b0c1a;
+  --play: #1d1d3a;
+  --list-hover: #282a5a;
+  --card-footer: #{darken(#202248, 3)};
+  --skeleton: #ffffff21;
+  --skeleton-wave: #ffffff14;
+}
+
+// Outils
+// ==================
+@import 'tools/reset';
+@import 'tools/functions';
+@import 'tools/mixins';
+@import 'tools/layout';
+@import 'tools/typography';
+@import 'tools/animations';
+
+// Generic
+// ==================
+body {
+  font-family: $font;
+  font-size: 16px;
+  color: var(--color);
+  line-height: 1.6;
+  background: var(--background);
+  scroll-margin: 100px 0 0 0;
+}
+
+body.light {
+  background: var(--background-light);
+  &::after {
+    display: none;
+  }
+}
+
+body.header-light::after {
+  display: none;
+}
+
+body::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 580px;
+  height: 506px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+::selection {
+  background: var(--contrast);
+  color: #fff;
+}
+
+// Modules
+// ==================
+@import 'modules/header';
+@import 'modules/card';
+@import 'modules/color';
+@import 'modules/scrollbar';
+@import 'modules/btn';
+@import 'modules/pagination';
+@import 'modules/form';
+@import 'modules/alert';
+@import 'modules/formatted';
+@import 'modules/table';
+@import 'modules/modal';
+@import 'modules/list';
+@import 'modules/comments';
+@import 'modules/page';
+@import 'modules/breadcrumb';
+@import 'modules/hero';
+@import 'modules/nav';
+@import 'modules/highlight';
+@import 'modules/pricing';
+@import 'modules/notifications';
+@import 'modules/footer';
+@import 'modules/stepper';
+@import 'modules/slider';
+@import 'modules/search';
+// @import 'modules/tooltips';
+
+// Pages
+// ==================
+@import 'pages/live';
+@import 'pages/course';
+@import 'pages/cursus';
+@import 'pages/chapters';
+@import 'pages/auth';
+@import 'pages/blog';
+@import 'pages/dashboard';
+@import 'pages/env';
+@import 'pages/formations';
+@import 'pages/home';
+@import 'pages/forum';
+@import 'pages/user';
+@import 'pages/premium';
+@import 'pages/badges';
+

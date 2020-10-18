@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title title %}
+
+{% block body %}
+
+  <div class="blog-posts my5">
+
+    <h1 class="reader-only">{{ title }}</h1>
+
+    {% for post in posts %}
+      {% include 'blog/_post.html.twig' %}
+    {% endfor %}
+
+    {{ knp_pagination_render(posts) }}
+  </div>
+
+{% endblock %}

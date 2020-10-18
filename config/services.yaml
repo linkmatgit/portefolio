@@ -1,0 +1,81 @@
+parameters:
+  admin_prefix:     '%env(resolve:ADMIN_PREFIX)%'
+  download_path:    '%kernel.project_dir%/downloads'
+  videos_path:      '%download_path%/videos'
+  sources_path:     '%download_path%/sources'
+  image_resize_key: '%env(resolve:IMAGE_RESIZE_KEY)%'
+  twitter_key:      '%env(resolve:TWITTER_KEY)%'
+  twitter_secret:   '%env(resolve:TWITTER_SECRET)%'
+
+services:
+  _defaults:
+    autowire: true # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    public: false
+    bind:
+      $videosPath: '%videos_path%'
+      $projectDir: '%kernel.project_dir%'
+
+  _instanceof:
+    App\Core\Twig\BreadcrumbInterface:
+      tags: ['app.breadcrumb']
+
+  App\:
+    resource: '../src/*'
+    exclude: '../src/{DependencyInjection,Entity,Infrastructure/Migrations,Tests,Kernel.php}'
+
+  App\Http\Controller\:
+    resource: '../src/Http/Controller'
+    tags: ['controller.service_arguments']
+
+  App\Http\Admin\Controller\:
+    resource: '../src/Http/Admin/Controller'
+    tags: ['controller.service_arguments']
+
+  App\Http\Api\Controller\:
+    resource: '../src/Http/Api/Controller'
+    tags: ['controller.service_arguments']
+
+  Everyman\Neo4j\Client:
+    factory: ['App\Core\Services\Neo4jClientFactory', 'createClient']
+    arguments: ['neo4j', 'neo4j', 'neo']
+
+  App\Infrastructure\Storage\Naming\IdDirectoryNamer:
+    public: true
+
+  App\Http\Admin\Firewall\AdminRequestListener:
+    arguments: ['%admin_prefix%']
+
+  Knp\Bundle\PaginatorBundle\Helper\Processor: ~
+
+  App\Core\Helper\Paginator\PaginatorInterface:
+    class: App\Core\Helper\Paginator\KnpPaginator
+
+  App\Core\Twig\TwigBreadcrumbExtension:
+    arguments: [!tagged_iterator app.breadcrumb]
+
+  App\Core\UploaderBundle\PropertyGroupedDirectoryNamer:
+    public: true
+
+  App\Infrastructure\Mercure\Service\CookieGenerator:
+    arguments:
+      $secret: '%env(resolve:MERCURE_SUBSCRIBER_KEY)%'
+
+  App\Core\Twig\TwigAssetExtension:
+    arguments:
+      $assetPath: '%kernel.project_dir%/public/assets'
+
+  App\Core\OptionInterface:
+    class: 'App\Domain\Application\Option'
+
+  App\Infrastructure\Image\ImageResizer:
+    arguments: ['%image_resize_key%']
+
+  App\Core\Orm\DoctrineSchemaListener:
+    tags: ['doctrine.event_subscriber']
+
+  App\Core\Services\TwitterService:
+    arguments: ['%twitter_key%', '%twitter_secret%']
+
+  App\Infrastructure\Queue\FailedJobsService:
+    arguments: ['@messenger.transport.failed']

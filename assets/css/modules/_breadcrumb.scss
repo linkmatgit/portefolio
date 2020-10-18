@@ -1,0 +1,15 @@
+.breadcrumb {
+  height: space(6);
+  color: var(--color-light);
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+}
+.breadcrumb svg {
+  width: 16px;
+  height: 16px;
+}
+.breadcrumb a:hover span {
+  color: var(--color);
+  text-decoration: underline;
+}
