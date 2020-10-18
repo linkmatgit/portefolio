@@ -1,0 +1,23 @@
+<modal-dialog overlay-close>
+  <div class="modal-box">
+    <header>Félicitations ! </header>
+    <div class="text-center py2">
+      <img src="/images/success.svg" alt="" style="max-width: 80%;">
+    </div>
+    <p>Bien joué jeune padawan ! On poursuit la formation Jedi avec une nouvelle vidéo ?</p>
+    <footer class="text-center mt3">
+      {% if button %}
+        <a data-dismiss class="btn btn-block btn-primary" href="{{ path(button.target) }}#{{ button.anchor }}">
+          {{ button.title }}
+        </a>
+      {% endif %}
+    </footer>
+    <button
+      data-dismiss
+      aria-label="Close"
+      class="modal-close"
+    >
+      {{ icon('cross') }}
+    </button>
+  </div>
+</modal-dialog>
